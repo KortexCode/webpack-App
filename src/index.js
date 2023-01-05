@@ -1,4 +1,6 @@
 import Template from './templates/Template.js';//Se recibe el template importando
+import './styles/main.css';//webpack vendrá aquí a esta entry y detectará este import
+import './styles/var.styl';
 
 (async function App() {
   //develve el elemento html si existe

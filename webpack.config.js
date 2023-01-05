@@ -2,8 +2,11 @@
 
 //path es un elemento disponible dentro de node.js
 const path = require("path");
-//Crear un módulo que se va a exportar conteniendo un objeto con la configuración deseada
+//plugins de webpack a usar
+const HtmlWebpackPlugin = require("html-webpack-plugin");
+const MiniCssExtractPlugin = require("mini-css-extract-plugin");
 
+//Crear un módulo que se va a exportar conteniendo un objeto con la configuración deseada
 module.exports = {
     entry: "./src/index.js",
     output: {
@@ -24,7 +27,21 @@ module.exports = {
                 use:{
                     loader: "babel-loader",//Este es el cargador para usar babel con webpack
                 }
+            },
+            {
+                test: /\.css|styl$/i,//para que utilice los .mjs o sino los .js
+                use: [MiniCssExtractPlugin.loader, "css-loader", "stylus-loader"],          
             }
-        ]
-    }
+        ],
+    },
+    plugins:[
+        new HtmlWebpackPlugin(
+        {
+            filename: "main.html",
+            title: "PROFILE APP",
+            inject: true,  
+            template: "./public/index.html"
+        }),
+        new MiniCssExtractPlugin()
+    ]
 }
