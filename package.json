@@ -4,7 +4,7 @@
   "description": "En este proyecto se implementará el empaquetador webpack para la creación de una aplicación",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "build": "webpack --mode production --config webpack.config.js"
   },
   "repository": {
     "type": "git",
