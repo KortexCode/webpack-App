@@ -15,6 +15,7 @@ module.exports = {
         path: path.resolve(__dirname, "dist"),
         //Nombre al .js(optimizado) resultante dentro de la carpeta dist
         filename: 'main.js',
+        assetModuleFilename: 'images/[hash][ext][query]'
     },
     resolve: {
         //Para identificar con que extensiones va a trabajar
@@ -34,8 +35,15 @@ module.exports = {
                 use: [MiniCssExtractPlugin.loader, "css-loader", "stylus-loader"],          
             },
             {
-                test: /\.png/,//para que utilice los .png
+                test: /\.png/, //para que utilice los .png
                 type: "asset/resource"           
+            },
+            {
+                test: /\.woff|woff2$/i, //para que utilice los woff y woff2
+                type: 'asset/resource',
+                generator: {
+                  filename: 'fonts/[hash][ext][query]'
+                }
             }
         ],
     },
