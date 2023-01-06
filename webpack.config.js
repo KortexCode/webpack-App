@@ -5,6 +5,7 @@ const path = require("path");
 //plugins de webpack a usar
 const HtmlWebpackPlugin = require("html-webpack-plugin");
 const MiniCssExtractPlugin = require("mini-css-extract-plugin");
+const CopyWebpackPlugin = require("copy-webpack-plugin");
 
 //Crear un módulo que se va a exportar conteniendo un objeto con la configuración deseada
 module.exports = {
@@ -31,6 +32,10 @@ module.exports = {
             {
                 test: /\.css|styl$/i,//para que utilice los .mjs o sino los .js
                 use: [MiniCssExtractPlugin.loader, "css-loader", "stylus-loader"],          
+            },
+            {
+                test: /\.png/,//para que utilice los .png
+                type: "asset/resource"           
             }
         ],
     },
@@ -42,6 +47,17 @@ module.exports = {
             inject: true,  
             template: "./public/index.html"
         }),
-        new MiniCssExtractPlugin()
+        new MiniCssExtractPlugin(),
+        new CopyWebpackPlugin(
+            {
+                patterns: 
+                [
+                    { 
+                        from: path.resolve(__dirname, "src", "assets/images"),
+                        to: "assets/images" 
+                    }
+                ],
+            }
+        )
     ]
 }
