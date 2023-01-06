@@ -1,5 +1,5 @@
 //Se obtiene la dirección de la API
-const API = 'https://randomuser.me/api/';
+const API = process.env.API;
 
 const getData = async (id) => {
   //Si se pasa un id, regresa la url con el id adicional, de lo contrario sólo la url
