@@ -6,6 +6,8 @@ const path = require("path");
 const HtmlWebpackPlugin = require("html-webpack-plugin");
 const MiniCssExtractPlugin = require("mini-css-extract-plugin");
 const CopyWebpackPlugin = require("copy-webpack-plugin");
+const CssMinimizerPlugin = require("css-minimizer-webpack-plugin");
+const TerserPlugin = require("terser-webpack-plugin");
 
 //Crear un módulo que se va a exportar conteniendo un objeto con la configuración deseada
 module.exports = {
@@ -14,8 +16,8 @@ module.exports = {
         //resolve permite conocer donde se encuentra nuestro proyecto(el optimizado)
         path: path.resolve(__dirname, "dist"),
         //Nombre al .js(optimizado) resultante dentro de la carpeta dist
-        filename: 'main.js',
-        assetModuleFilename: 'images/[hash][ext][query]'
+        filename: '[name].[contenthash].js',//para 
+        assetModuleFilename: 'assets/images/[hash][ext][query]'
     },
     resolve: {
         //Para identificar con que extensiones va a trabajar
@@ -42,7 +44,7 @@ module.exports = {
                 test: /\.woff|woff2$/i, //para que utilice los woff y woff2
                 type: 'asset/resource',
                 generator: {
-                  filename: 'fonts/[hash][ext][query]'
+                  filename: 'assets/fonts/[hash][ext][query]'
                 }
             }
         ],
@@ -55,8 +57,8 @@ module.exports = {
             inject: true,  
             template: "./public/index.html"
         }),
-        new MiniCssExtractPlugin(),
-        new CopyWebpackPlugin(
+        new MiniCssExtractPlugin({filename:"assets/[name].[contenthash].css"}),
+        /* new CopyWebpackPlugin(
             {
                 patterns: 
                 [
@@ -66,6 +68,15 @@ module.exports = {
                     }
                 ],
             }
-        )
-    ]
+        ) */
+    ],
+    optimization: {
+        minimize: true, //para minimizar en modo desarrollo
+        minimizer:
+        [
+            new TerserPlugin(),//para optimizar JS
+            new CssMinimizerPlugin()//Para otimizar CSS
+        ],
+    },
+    
 }
