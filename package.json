@@ -4,7 +4,7 @@
   "description": "En este proyecto se implementará el empaquetador webpack para la creación de una aplicación",
   "main": "index.js",
   "scripts": {
-    "build": "webpack --mode production --config webpack.config.js",
+    "build": "node ./scripts/create-enve.js && webpack --mode production --config webpack.config.js",
     "dev": "webpack --config webpack.config.dev.js"
   },
   "repository": {
