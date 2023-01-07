@@ -6,6 +6,7 @@ const path = require("path");
 const HtmlWebpackPlugin = require("html-webpack-plugin");
 const MiniCssExtractPlugin = require("mini-css-extract-plugin");
 const Dotenv = require('dotenv-webpack');
+const BundleAnalyzerPlugin = require('webpack-bundle-analyzer').BundleAnalyzerPlugin;
 
 //Crear un módulo que se va a exportar conteniendo un objeto con la configuración deseada
 module.exports = {
@@ -18,6 +19,7 @@ module.exports = {
         assetModuleFilename: 'assets/images/[hash][ext][query]'
     },
     mode: "development",
+    devtool:"source-map",
     resolve: {
         //Para identificar con que extensiones va a trabajar
         extensions: [".js"],    
@@ -57,12 +59,25 @@ module.exports = {
     plugins:[
         new HtmlWebpackPlugin(
         {
-            filename: "main.html",
+            filename: "index.html",
             title: "PROFILE APP",
             inject: true,  
             template: "./public/index.html"
         }),
         new MiniCssExtractPlugin({filename:"assets/[name].[contenthash].css"}),
-        new Dotenv()
-    ],  
+        new Dotenv(),
+        new BundleAnalyzerPlugin()
+          
+    ], 
+    devServer: {
+        static: {
+            directory: path.join(__dirname, 'dist'),
+        },
+        compress: true,
+        historyApiFallback: true,
+        port: 3006,
+    },
+    
+
+    
 }
