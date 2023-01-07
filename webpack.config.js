@@ -61,7 +61,7 @@ module.exports = {
     plugins:[
         new HtmlWebpackPlugin(
         {
-            filename: "main.html",
+            filename: "index.html",
             title: "PROFILE APP",
             inject: true,  
             template: "./public/index.html"
